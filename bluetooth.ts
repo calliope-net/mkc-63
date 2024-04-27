@@ -7,6 +7,12 @@ namespace mkc
     let n_Licht = false
     let n_receivedBuffer19: Buffer
 
+    const c_MotorStop = 128
+    let n_MotorReady = false
+    //let n_MotorON = false       // aktueller Wert im Chip
+    let n_MotorA = c_MotorStop  // aktueller Wert im Chip
+
+
     export enum eBufferPointer {
         p0 = 1, p1 = 4, p2 = 7, p3 = 10, p4 = 13, p5 = 16
     }
@@ -46,7 +52,21 @@ namespace mkc
     }
 
 
+    //% group="Motor"
+    //% block="Motor A (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
+    //% speed.min=0 speed.max=255 speed.defl=128
+    export function motorA255(speed: number) { // sendet nur wenn der Wert sich ändert
+        if (n_MotorReady) {
+            if (between(speed, 0, 255) && speed != n_MotorA) {
+                n_MotorA = speed
 
+                motors.dualMotorPower(Motor.M0, Math.map(speed, 0, 255, -100, 100))
+                // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([MA_DRIVE, n_MotorA]))
+            }
+        }
+        else if (speed == c_MotorStop)
+            n_MotorReady = true
+    }
 
     // ========== Bluetooth Event ==========
 
@@ -60,6 +80,7 @@ namespace mkc
         //if (car4ready()) { // beim ersten Mal warten bis Motor bereit
         if (!n_connected) {
             //licht(false, false) //  Licht aus und Blinken beenden
+            n_MotorReady = false
             n_connected = true // wenn Start und Motor bereit, setze auch Bluetooth connected
         }
         n_lastconnectedTime = input.runningTime() // Connection-Timeout Zähler zurück setzen
@@ -208,7 +229,7 @@ namespace mkc
 
     /* 
         // ========== group="Bluetooth senden" subcategory="Bluetooth"
-    
+     
         // group="Bluetooth senden" subcategory="Bluetooth"
         // block="sende Buffer" weight=2
         export function sendBuffer() {

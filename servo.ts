@@ -1,9 +1,9 @@
 
 namespace mkc { // servo.ts
-    export const pinServo = AnalogPin.P3           // 5V fischertechnik 132292 Servo
+    export const pinServo = AnalogPin.P1 // 5V fischertechnik 132292 Servo
     export const c_Servo_geradeaus = 90
 
- export   let n_Servo_geradeaus = c_Servo_geradeaus // Winkel für geradeaus wird beim Start eingestellt
+    export let n_Servo_geradeaus = c_Servo_geradeaus // Winkel für geradeaus wird beim Start eingestellt
     let n_ServoWinkel = c_Servo_geradeaus // aktuell eingestellter Winkel
 
 
