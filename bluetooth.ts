@@ -3,6 +3,8 @@ namespace mkc
 /*
 */ { // bluetooth.ts
 
+    let n_ready = false
+    let n_Licht = false
     let n_receivedBuffer19: Buffer
 
     export enum eBufferPointer {
@@ -21,9 +23,26 @@ namespace mkc
     }
 
 
-    export function bluetooth_beimStart() {
+    //% group="beim Start"
+    //% block="beim Start Funkgruppe %funkgruppe Servo ↑ %winkel °" weight=8
+    //% funkgruppe.min=0 funkgruppe.max=255 funkgruppe.defl=240
+    //% winkel.min=81 winkel.max=99 winkel.defl=90
+    //% inlineInputMode=inline 
+    export function bluetooth_beimStart(funkgruppe: number, winkel: number) {
+        n_ready = false // CaR4 ist nicht bereit: Schleifen werden nicht abgearbeitet
+
+        // Parameter
+        radio.setGroup(funkgruppe)
+        n_Servo_geradeaus = winkel
+
+        //servo(90) // Servo PIN PWM
+        pins.servoWritePin(pinServo, n_Servo_geradeaus)
+
+        // Bluetooth
         n_connected = false
         n_lastconnectedTime = input.runningTime() // Laufzeit
+
+        n_ready = true
     }
 
 
@@ -38,16 +57,16 @@ namespace mkc
     radio.onReceivedBuffer(function (receivedBuffer) {
         n_receivedBuffer19 = receivedBuffer
 
-        /* if (car4ready()) { // beim ersten Mal warten bis Motor bereit
-            if (!n_connected) {
-                licht(false, false) //  Licht aus und Blinken beenden
-                n_connected = true // wenn Start und Motor bereit, setze auch Bluetooth connected
-            }
-            n_lastconnectedTime = input.runningTime() // Connection-Timeout Zähler zurück setzen
+        //if (car4ready()) { // beim ersten Mal warten bis Motor bereit
+        if (!n_connected) {
+            //licht(false, false) //  Licht aus und Blinken beenden
+            n_connected = true // wenn Start und Motor bereit, setze auch Bluetooth connected
+        }
+        n_lastconnectedTime = input.runningTime() // Connection-Timeout Zähler zurück setzen
 
-            if (onReceivedBufferHandler)
-                onReceivedBufferHandler(receivedBuffer) // Ereignis Block auslösen, nur wenn benutzt
-        } */
+        if (onReceivedBufferHandler)
+            onReceivedBufferHandler(receivedBuffer) // Ereignis Block auslösen, nur wenn benutzt
+        //}
     })
 
 
@@ -69,11 +88,19 @@ namespace mkc
 
 
     //% group="Bluetooth Verbindung" subcategory="Bluetooth" color=#E3008C
-    //% block="Timeout || nach %timeout s, aus nach %ausschalten s, Licht %lichtan, blinken %blinken" weight=8
-    //% timeout.defl=1 ausschalten.defl=60 lichtan.defl=1 blinken.defl=1
-    //% lichtan.shadow="toggleOnOff" blinken.shadow="toggleOnOff"
-    //% inlineInputMode=inline expandableArgumentMode=toggle
-    export function bluetooth_timeout(timeout?: number, ausschalten?: number, lichtan = true, blinken = true) {
+    //% block="Timeout || nach %timeout s" weight=8
+    //% timeout.defl=1
+    // inlineInputMode=inline expandableArgumentMode=toggle
+    export function bluetooth_timeout(timeout?: number) {
+
+        if (n_connected && lastConnected(timeout))
+            n_connected = false // nach 1 s disconnected
+        else if (!n_connected) {
+            n_Licht = !n_Licht
+            basic.setLedColor(n_Licht ? 0x009ff00 : 0x0000ff)
+        }
+        return !n_connected // true wenn disconnected, also timeout eingetreten
+
         /* if (car4ready()) { // beim ersten Mal warten bis Motor bereit
             if (lastConnected(ausschalten))
                 relay(false) // nach 60 s ohne Bluetooth Relais aus schalten
@@ -83,7 +110,7 @@ namespace mkc
                 licht(lichtan, blinken)
             return !n_connected // true wenn disconnected, also timeout eingetreten
         } else */
-            return false
+        //return false
     }
 
 

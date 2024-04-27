@@ -10,7 +10,8 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "bluetooth.ts"
+        "bluetooth.ts",
+        "servo.ts"
     ],
     "testFiles": [
         "test.ts"
