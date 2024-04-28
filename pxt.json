@@ -12,7 +12,9 @@
         "README.md",
         "mkc.ts",
         "bluetooth.ts",
-        "v3.ts"
+        "v3.ts",
+        "programmieren.ts",
+        "sensoren.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -24,5 +26,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }

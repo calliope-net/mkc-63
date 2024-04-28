@@ -2,6 +2,7 @@
 //% color=#007F00 icon="\uf0d1" block="Maker Kit Car" weight=28
 namespace mkc { // mkc.ts
 
+    export const pinEncoder = DigitalPin.P2        // 5V fischertechnik 186175 Encodermotor Competition
 
     const c_Simulator: boolean = ("€".charCodeAt(0) == 8364)
     let n_ready = false
@@ -99,6 +100,15 @@ namespace mkc { // mkc.ts
         //    n_MotorChipReady = true
     }
 
+
+    // group="Motor"
+    // block="Motor %motor (0 ↓ 128 ↑ 255)" weight=3
+    export function motor_get(motor: Motor) {
+        if (motor == Motor.M1)
+            return n_Motor1
+        else
+            return n_Motor0
+    }
 
 
     // ========== group="Servo"
