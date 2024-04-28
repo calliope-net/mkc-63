@@ -82,7 +82,7 @@ namespace mkc { // bluetooth.ts
                 relay(false) // nach 60 s ohne Bluetooth Relais aus schalten
             else if (n_connected && lastConnected(timeout)) {
                 n_connected = false // nach 1 s disconnected
-                motorON(false)
+                motorPower(false)
             }
             //else if (!n_connected)
             //    licht(true, true)

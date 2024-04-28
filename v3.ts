@@ -22,18 +22,25 @@ namespace mkc { // v3.ts
 
 
     //% group="Licht"
-    //% block="RGB LEDs %led %color || blinken %blinken" weight=5
+    //% block="RGB LEDs %led %color %on" weight=6
     //% color.shadow="colorNumberPicker"
-    //% blinken.shadow="toggleOnOff"
-    export function rgbLEDs(led: eRGBled, color: number, blinken = false) {
-        if (n_rgbled[led] != 0 && blinken)
+    //% on.shadow="toggleOnOff"
+    export function rgbLEDon(led: eRGBled, color: number, on: boolean) {
+        rgbLEDs(led, (on ? color : 0), false)
+    }
+
+    //% group="Licht"
+    //% block="RGB LEDs %led %color blinken %blinken" weight=5
+    //% color.shadow="colorNumberPicker"
+    //% blinken.shadow="toggleYesNo"
+    export function rgbLEDs(led: eRGBled, color: number, blinken: boolean) {
+        if (blinken && n_rgbled[led] != 0)
             n_rgbled[led] = 0
         else
             n_rgbled[led] = color
 
         basic.setLedColors(n_rgbled[0], n_rgbled[1], n_rgbled[2])
     }
-
 
 
 } // v3.ts

@@ -10,7 +10,7 @@ namespace mkc { // mkc.ts
 
     export const c_MotorStop = 128
     // export let n_MotorChipReady = false
-    let n_MotorON = false       // aktueller Wert im Chip Motor Power
+    let n_MotorPower = false    // aktueller Wert im Chip Motor Power
     let n_Motor0 = c_MotorStop  // aktueller Wert im Chip
     let n_Motor1 = c_MotorStop  // aktueller Wert im Chip
 
@@ -56,14 +56,14 @@ namespace mkc { // mkc.ts
     //% group="Motor"
     //% block="Motor Power %pON" weight=7
     //% pON.shadow="toggleOnOff"
-    export function motorON(pON: boolean) { // sendet nur wenn der Wert sich ändert
+    export function motorPower(pON: boolean) { // sendet nur wenn der Wert sich ändert
         // if (motorStatus() && (pON !== n_MotorON)) { // !== XOR eine Seite ist true aber nicht beide
-        if (pON !== n_MotorON) {
+        if (pON !== n_MotorPower) {
             //motors.dualMotorPower(Motor.M0_M1, 0)
-            n_MotorON = pON
-            if (!n_MotorON && n_Motor0 != c_MotorStop)
+            n_MotorPower = pON
+            if (!n_MotorPower && n_Motor0 != c_MotorStop)
                 motors.dualMotorPower(Motor.M0, 0)
-            if (!n_MotorON && n_Motor1 != c_MotorStop)
+            if (!n_MotorPower && n_Motor1 != c_MotorStop)
                 motors.dualMotorPower(Motor.M1, 0)
         }
     }
@@ -75,7 +75,7 @@ namespace mkc { // mkc.ts
     //% block="Motor %motor (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
     //% speed.min=0 speed.max=255 speed.defl=128
     export function motor255(motor: Motor, speed: number) { // sendet nur an MotorChip, wenn der Wert sich ändert
-        if (n_MotorON) {
+        if (n_MotorPower) {
             if (between(speed, 0, 255)) {
                 let duty_percent = (speed == c_MotorStop ? 0 : Math.map(speed, 0, 255, -100, 100))
 
