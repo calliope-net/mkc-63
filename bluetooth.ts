@@ -123,13 +123,42 @@ namespace mkc { // bluetooth.ts
 
     // ========== group="Bluetooth empfangen" subcategory="Bluetooth"
 
+
+    export enum eBufferBit {
+        //% block="Motor Power"
+        x80_MotorPower,
+        //% block="Hupe"
+        x40_Hupe,
+        //% block="connected & fahren Joystick"
+        fahrenJostick,
+        //% block="connected & fahren Strecke"
+        fahrenStrecke
+    }
+
+    //% group="Bluetooth empfangen" color=#007F7F
+    //% block="Bluetooth Steuer-Byte 0 %pBit" weight=9
+    export function receivedBuffer_getBit(pBit: eBufferBit) {
+        let byte0 = n_receivedBuffer19.getUint8(0)
+        switch (pBit) {
+            //case eBit.b2_Joystick: return receivedBuffer_getUint8(eBuffer.b2_Fahrstrecke) == 0
+            //case eBit.b2_Encoder: return receivedBuffer_getUint8(eBuffer.b2_Fahrstrecke) > 0
+            case eBufferBit.x80_MotorPower: return (byte0 & 0x80) == 0x80
+            case eBufferBit.x40_Hupe: return (byte0 & 0x40) == 0x40
+
+            case eBufferBit.fahrenJostick: return n_connected && (byte0 & 0x03) == 0x00 // 000
+            case eBufferBit.fahrenStrecke: return n_connected && (byte0 & 0x03) != 0x00 // 001 010 111
+            default: return false
+        }
+    }
+
     // group="Bluetooth empfangen" subcategory="Bluetooth"
     // block="BufferPointer" weight=9
     //export function receivedBuffer_Pointer() { return n_BufferPointer }
 
 
+
     //% group="Bluetooth empfangen" color=#007F7F
-    //% block="Bluetooth Datenpaket gültig || %pBufferPointer | " weight=8
+    //% block="Bluetooth Datenpaket gültig || %pBufferPointer | " weight=7
     export function receivedBuffer_Contains(pBufferPointer?: eBufferPointer): boolean {
         // wenn optionaler Parameter fehlt
         if (!pBufferPointer) pBufferPointer = n_BufferPointer // 1, 4, 7, 10, 13, 16
@@ -137,7 +166,7 @@ namespace mkc { // bluetooth.ts
     }
 
     //% group="Bluetooth empfangen" color=#007F7F
-    //% block="Bluetooth Byte lesen %pOffset || %pBufferPointer " weight=7
+    //% block="Bluetooth Byte lesen %pOffset || %pBufferPointer " weight=6
     export function receivedBuffer_getUint8(pBufferOffset: eBufferOffset, pBufferPointer?: eBufferPointer) {
         //basic.showNumber(pBufferPointer)
 
@@ -154,34 +183,6 @@ namespace mkc { // bluetooth.ts
         } else return 0
     }
 
-
-
-    export enum eBufferBit {
-        //% block="Motor Power"
-        x80_MotorPower,
-        //% block="Hupe"
-        x40_Hupe,
-        //% block="connected & fahren Joystick"
-        fahrenJostick,
-        //% block="connected & fahren Strecke"
-        fahrenStrecke
-    }
-
-    //% group="Bluetooth empfangen" color=#007F7F
-    //% block="Bluetooth Steuer-Byte 0 %pBit" weight=6
-    export function receivedBuffer_getBit(pBit: eBufferBit) {
-        let byte0 = n_receivedBuffer19.getUint8(0)
-        switch (pBit) {
-            //case eBit.b2_Joystick: return receivedBuffer_getUint8(eBuffer.b2_Fahrstrecke) == 0
-            //case eBit.b2_Encoder: return receivedBuffer_getUint8(eBuffer.b2_Fahrstrecke) > 0
-            case eBufferBit.x80_MotorPower: return (byte0 & 0x80) == 0x80
-            case eBufferBit.x40_Hupe: return (byte0 & 0x40) == 0x40
-
-            case eBufferBit.fahrenJostick: return n_connected && (byte0 & 0x03) == 0x00 // 000
-            case eBufferBit.fahrenStrecke: return n_connected && (byte0 & 0x03) != 0x00 // 001 010 111
-            default: return false
-        }
-    }
 
 
     /* 

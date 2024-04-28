@@ -13,6 +13,6 @@ mkc.beimStart(240, AnalogPin.P1, 90)
 basic.showIcon(IconNames.Yes)
 loops.everyInterval(700, function () {
     if (mkc.bluetooth_timeout(1, 60)) {
-        mkc.licht(true, true)
+        mkc.rgbLEDs(mkc.eRGBled.b, 0xff0000, true)
     }
 })
