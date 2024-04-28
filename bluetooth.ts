@@ -48,7 +48,7 @@ namespace mkc { // bluetooth.ts
         if (carReady()) { // beim ersten Mal warten bis Motor bereit
             if (!n_connected) {
                 //licht(false, false) //  Licht aus und Blinken beenden
-                n_MotorReady = false
+                n_MotorChipReady = false
                 n_connected = true // wenn Start und Motor bereit, setze auch Bluetooth connected
             }
             n_lastconnectedTime = input.runningTime() // Connection-Timeout Zähler zurück setzen
@@ -121,12 +121,12 @@ namespace mkc { // bluetooth.ts
 
     // ========== group="Bluetooth empfangen" subcategory="Bluetooth"
 
-    //% group="Bluetooth empfangen" subcategory="Bluetooth"
-    //% block="BufferPointer" weight=9
-    export function receivedBuffer_Pointer() { return n_BufferPointer }
+    // group="Bluetooth empfangen" subcategory="Bluetooth"
+    // block="BufferPointer" weight=9
+    //export function receivedBuffer_Pointer() { return n_BufferPointer }
 
 
-    //% group="Bluetooth empfangen" subcategory="Bluetooth"
+    //% group="Bluetooth empfangen"
     //% block="Bluetooth Datenpaket gültig || %pBufferPointer | " weight=8
     export function receivedBuffer_Contains(pBufferPointer?: eBufferPointer): boolean {
         // wenn optionaler Parameter fehlt
@@ -134,7 +134,7 @@ namespace mkc { // bluetooth.ts
         return (n_receivedBuffer19 && (n_receivedBuffer19.length > (pBufferPointer + 2))) // max 18
     }
 
-    //% group="Bluetooth empfangen" subcategory="Bluetooth"
+    //% group="Bluetooth empfangen"
     //% block="Bluetooth Byte lesen %pOffset || %pBufferPointer " weight=7
     export function receivedBuffer_getUint8(pBufferOffset: eBufferOffset, pBufferPointer?: eBufferPointer) {
         //basic.showNumber(pBufferPointer)
@@ -165,7 +165,7 @@ namespace mkc { // bluetooth.ts
         fahrenStrecke
     }
 
-    //% group="Bluetooth empfangen" subcategory="Bluetooth"
+    //% group="Bluetooth empfangen"
     //% block="Bluetooth Steuer-Byte 0 %pBit" weight=6
     export function receivedBuffer_getBit(pBit: eBufferBit) {
         let byte0 = n_receivedBuffer19.getUint8(0)

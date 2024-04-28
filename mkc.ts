@@ -6,9 +6,10 @@ namespace mkc { // mkc.ts
     const c_Simulator: boolean = ("€".charCodeAt(0) == 8364)
 
     export const c_MotorStop = 128
-    export let n_MotorReady = false
-    let n_MotorON = false       // aktueller Wert im Chip
-    let n_MotorA = c_MotorStop  // aktueller Wert im Chip
+    export let n_MotorChipReady = false
+    let n_MotorON = false       // aktueller Wert im Chip Motor Power
+    let n_Motor0 = c_MotorStop  // aktueller Wert im Chip
+    let n_Motor1 = c_MotorStop  // aktueller Wert im Chip
 
     export const c_Servo_geradeaus = 90
     let n_ServoPin = AnalogPin.P1           // 5V fischertechnik 132292 Servo
@@ -17,7 +18,7 @@ namespace mkc { // mkc.ts
     let n_ready = false
 
 
-    //% group="beim Start"
+    //% group="calliope-net.github.io/mkc-63"
     //% block="beim Start Funkgruppe %funkgruppe Servo Pin %servoPin ↑ %servoGeradeaus °" weight=8
     //% funkgruppe.min=0 funkgruppe.max=255 funkgruppe.defl=240
     //% servoPin.defl=AnalogPin.P1
@@ -40,7 +41,7 @@ namespace mkc { // mkc.ts
     }
 
 
-    // group="beim Start"
+    // group="calliope-net.github.io/mkc-63"
     // block="Car bereit" weight=6
     export function carReady() {
         return n_ready //&& motorStatus()
@@ -48,23 +49,50 @@ namespace mkc { // mkc.ts
 
 
 
+    // ========== group="Motor"
+
+    //% group="Motor"
+    //% block="Motor Power %pON" weight=7
+    //% pON.shadow="toggleOnOff"
+    export function motorON(pON: boolean) { // sendet nur wenn der Wert sich ändert
+        // if (motorStatus() && (pON !== n_MotorON)) { // !== XOR eine Seite ist true aber nicht beide
+        if (pON !== n_MotorON) {
+            n_MotorON = pON
+            // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([DRIVER_ENABLE, n_MotorON ? 0x01 : 0x00]))
+        }
+    }
+
     //% group="Motor"
     //% block="Motor %motor (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
     //% speed.min=0 speed.max=255 speed.defl=128
-    export function motorA255(motor: Motor, speed: number) { // sendet nur wenn der Wert sich ändert
-        if (n_MotorReady) {
-            if (between(speed, 0, 255) && speed != n_MotorA) {
-                n_MotorA = speed
+    export function motorA255(motor: Motor, speed: number) { // sendet nur an MotorChip, wenn der Wert sich ändert
+        if (n_MotorChipReady) {
+            if (between(speed, 0, 255)) {
+                let duty_percent = Math.map(speed, 0, 255, -100, 100)
 
-                motors.dualMotorPower(motor, Math.map(speed, 0, 255, -100, 100))
+                if (motor == Motor.M0 && speed != n_Motor0) {
+                    n_Motor0 = speed
+                    motors.dualMotorPower(motor, duty_percent)
+                }
+                else if (motor == Motor.M1 && speed != n_Motor1) {
+                    n_Motor1 = speed
+                    motors.dualMotorPower(motor, duty_percent)
+                }
+                else if (motor == Motor.M0_M1 && (speed != n_Motor0 || speed != n_Motor1)) {
+                    n_Motor0 = speed
+                    n_Motor1 = speed
+                    motors.dualMotorPower(motor, duty_percent)
+                }
+
                 // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([MA_DRIVE, n_MotorA]))
             }
         }
         else if (speed == c_MotorStop)
-            n_MotorReady = true
+            n_MotorChipReady = true
     }
 
 
+    // ========== group="Servo"
 
     //% group="Servo"
     //% block="Servo (135° ↖ 90° ↗ 45°) %winkel °" weight=4
@@ -79,7 +107,8 @@ namespace mkc { // mkc.ts
     }
     // group="Servo"
     // block="Servo (135° ↖ 90° ↗ 45°)" weight=2
-     function servo_get() { return n_ServoWinkel }
+    function servo_get() { return n_ServoWinkel }
+
 
 
     // ========== advanced=true ==========
