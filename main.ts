@@ -7,6 +7,7 @@ mkc.onReceivedData(function (receivedBuffer) {
         } else {
             mkc.motor255(Motor.M0, 128)
         }
+        mkc.rgbLEDs(mkc.eRGBled.b, 0x000000)
     } else if (mkc.receivedBuffer_getBit(mkc.eBufferBit.fahrenStrecke)) {
         mkc.motorON(mkc.receivedBuffer_getBit(mkc.eBufferBit.x80_MotorPower))
         mkc.fahreBuffer19()
