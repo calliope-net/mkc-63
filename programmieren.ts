@@ -45,7 +45,7 @@ namespace mkc { // programmieren.ts
         if (lmotor != c_MotorStop && lstrecke > 0) {
             encoder_start(lstrecke, true)
             servo_set(lservo)
-            motorA255(c_MotorEncoder, lmotor)
+            motor255(c_MotorEncoder, lmotor)
 
             while (n_EncoderAutoStop) {
                 basic.pause(200) // Pause kann größer sein, weil Stop schon im Event erfolgt ist
@@ -75,7 +75,7 @@ namespace mkc { // programmieren.ts
             if (lmotor != c_MotorStop && lstrecke > 0) {
                 encoder_start(lstrecke, true)
                 servo_set(lservo)
-                motorA255(c_MotorEncoder, lmotor)
+                motor255(c_MotorEncoder, lmotor)
 
                 while (n_EncoderAutoStop) {
                     basic.pause(200) // Pause kann größer sein, weil Stop schon im Event erfolgt ist

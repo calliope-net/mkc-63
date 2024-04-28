@@ -23,7 +23,7 @@ namespace mkc { // sensoren.ts
 
             //n_EncoderStopEvent = true
             if (n_EncoderAutoStop) {
-                motorA255(c_MotorEncoder, c_MotorStop)
+                motor255(c_MotorEncoder, c_MotorStop)
                 n_EncoderAutoStop = false
             }
 
@@ -55,4 +55,49 @@ namespace mkc { // sensoren.ts
             n_EncoderStrecke_impulse = 0
         }
     }
+
+
+
+    //% group="Encoder" subcategory="Sensoren"
+    //% block="Fahrstrecke %pVergleich %cm cm" weight=7
+    //% cm.defl=15
+    export function encoder_vergleich(pVergleich: eVergleich, cm: number) {
+        switch (pVergleich) {
+            case eVergleich.gt: return encoder_get(eEncoderEinheit.cm) >= cm
+            case eVergleich.lt: return encoder_get(eEncoderEinheit.cm) <= cm
+            default: return false
+        }
+    }
+
+    //% group="Encoder" subcategory="Sensoren"
+    //% block="warte bis Strecke %pVergleich %cm cm || Pause %ms ms" weight=6
+    //% cm.defl=15 ms.defl=20
+    export function encoder_warten(pVergleich: eVergleich, cm: number, ms?: number) {
+        while (encoder_vergleich(pVergleich, cm)) {
+            basic.pause(ms)
+        }
+    }
+
+
+
+
+    //% group="Encoder" subcategory="Sensoren"
+    //% block="Encoder %pEncoderEinheit" weight=4
+    export function encoder_get(pEncoderEinheit: eEncoderEinheit) {
+        if (pEncoderEinheit == eEncoderEinheit.cm)
+            // 63.3 Motorwelle * (26/14) Zahnräder / (8cm * PI) Rad Umfang = 4.6774502 cm
+            // Test: 946 Impulse = 200 cm
+            return Math.round(n_EncoderCounter / n_EncoderFaktor)
+        else
+            return n_EncoderCounter
+    }
+
+    export enum eVergleich {
+        //% block=">="
+        gt,
+        //% block="<="
+        lt
+    }
+    export enum eEncoderEinheit { cm, Impulse }
+
 } // sensoren.ts

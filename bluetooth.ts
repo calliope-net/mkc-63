@@ -232,6 +232,6 @@ namespace mkc { // bluetooth.ts
     //% group="Relais" subcategory="Aktoren"
     //% block="Relais %pON"
     //% pON.shadow="toggleOnOff"
-    function relay(pON: boolean) { }
+ export   function relay(pON: boolean) { }
 
 } // bluetooth.ts
