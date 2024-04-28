@@ -4,9 +4,10 @@ namespace mkc { // mkc.ts
 
 
     const c_Simulator: boolean = ("€".charCodeAt(0) == 8364)
+    let n_ready = false
 
     export const c_MotorStop = 128
-    export let n_MotorChipReady = false
+    // export let n_MotorChipReady = false
     let n_MotorON = false       // aktueller Wert im Chip Motor Power
     let n_Motor0 = c_MotorStop  // aktueller Wert im Chip
     let n_Motor1 = c_MotorStop  // aktueller Wert im Chip
@@ -15,7 +16,7 @@ namespace mkc { // mkc.ts
     let n_ServoPin = AnalogPin.P1           // 5V fischertechnik 132292 Servo
     let n_ServoGeradeaus = c_Servo_geradeaus // Winkel für geradeaus wird beim Start eingestellt
     let n_ServoWinkel = c_Servo_geradeaus // aktuell eingestellter Winkel
-    let n_ready = false
+  
 
 
     //% group="calliope-net.github.io/mkc-63"
@@ -57,18 +58,23 @@ namespace mkc { // mkc.ts
     export function motorON(pON: boolean) { // sendet nur wenn der Wert sich ändert
         // if (motorStatus() && (pON !== n_MotorON)) { // !== XOR eine Seite ist true aber nicht beide
         if (pON !== n_MotorON) {
+            //motors.dualMotorPower(Motor.M0_M1, 0)
             n_MotorON = pON
-            // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([DRIVER_ENABLE, n_MotorON ? 0x01 : 0x00]))
+            if (!n_MotorON)
+                motors.dualMotorPower(Motor.M0_M1, 0)
         }
     }
+    // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([DRIVER_ENABLE, n_MotorON ? 0x01 : 0x00]))
+
+
 
     //% group="Motor"
     //% block="Motor %motor (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
     //% speed.min=0 speed.max=255 speed.defl=128
     export function motorA255(motor: Motor, speed: number) { // sendet nur an MotorChip, wenn der Wert sich ändert
-        if (n_MotorChipReady) {
+        if (n_MotorON) {
             if (between(speed, 0, 255)) {
-                let duty_percent = Math.map(speed, 0, 255, -100, 100)
+                let duty_percent = (speed == c_MotorStop ? 0 : Math.map(speed, 0, 255, -100, 100))
 
                 if (motor == Motor.M0 && speed != n_Motor0) {
                     n_Motor0 = speed
@@ -87,9 +93,10 @@ namespace mkc { // mkc.ts
                 // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([MA_DRIVE, n_MotorA]))
             }
         }
-        else if (speed == c_MotorStop)
-            n_MotorChipReady = true
+        //else if (speed == c_MotorStop)
+        //    n_MotorChipReady = true
     }
+
 
 
     // ========== group="Servo"

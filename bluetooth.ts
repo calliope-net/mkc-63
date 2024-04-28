@@ -48,7 +48,7 @@ namespace mkc { // bluetooth.ts
         if (carReady()) { // beim ersten Mal warten bis Motor bereit
             if (!n_connected) {
                 //licht(false, false) //  Licht aus und Blinken beenden
-                n_MotorChipReady = false
+                //   n_MotorChipReady = false
                 n_connected = true // wenn Start und Motor bereit, setze auch Bluetooth connected
             }
             n_lastconnectedTime = input.runningTime() // Connection-Timeout Zähler zurück setzen
@@ -62,7 +62,7 @@ namespace mkc { // bluetooth.ts
 
     // Event-Block
 
-    //% group="Bluetooth Verbindung"
+    //% group="Bluetooth Verbindung" color=#00AF00
     //% block="wenn bereit und Datenpaket empfangen" weight=9
     //% draggableParameters=reporter
     export function onReceivedData(cb: (receivedBuffer: Buffer) => void) {
@@ -71,7 +71,7 @@ namespace mkc { // bluetooth.ts
 
 
 
-    //% group="Bluetooth Verbindung"
+    //% group="Bluetooth Verbindung" color=#00AF00
     //% block="Bluetooth Timeout nach %timeout s ||, ausschalten nach %ausschalten s" weight=8
     //% timeout.defl=1 ausschalten.defl=60 
     // inlineInputMode=inline expandableArgumentMode=toggle
@@ -80,8 +80,10 @@ namespace mkc { // bluetooth.ts
         if (carReady()) { // beim ersten Mal warten bis Motor bereit
             if (lastConnected(ausschalten))
                 relay(false) // nach 60 s ohne Bluetooth Relais aus schalten
-            else if (n_connected && lastConnected(timeout))
+            else if (n_connected && lastConnected(timeout)) {
                 n_connected = false // nach 1 s disconnected
+                motorON(false)
+            }
             //else if (!n_connected)
             //    licht(true, true)
             return !n_connected // true wenn disconnected, also timeout eingetreten
@@ -97,18 +99,18 @@ namespace mkc { // bluetooth.ts
     function lastConnected(sekunden: number) {
         return (input.runningTime() - n_lastconnectedTime) / 1000 > sekunden
     }
-/* 
-    // group="Bluetooth Verbindung" subcategory="Bluetooth" color=#E3008C
-    // block="Bluetooth connected %connected" weight=3
-    // connected.shadow="toggleYesNo"
-    export function setConnected(connected: boolean) { n_connected = connected }
-
-
-    // group="Bluetooth Verbindung" subcategory="Bluetooth" color=#E3008C
-    // block="Bluetooth connected" weight=2
-    export function isConnected() { return n_connected }
-
- */
+    /* 
+        // group="Bluetooth Verbindung" subcategory="Bluetooth" color=#E3008C
+        // block="Bluetooth connected %connected" weight=3
+        // connected.shadow="toggleYesNo"
+        export function setConnected(connected: boolean) { n_connected = connected }
+    
+    
+        // group="Bluetooth Verbindung" subcategory="Bluetooth" color=#E3008C
+        // block="Bluetooth connected" weight=2
+        export function isConnected() { return n_connected }
+    
+     */
     export function receivedBuffer_hex(pBufferPointer?: eBufferPointer) {
         // wenn optionaler Parameter fehlt
         if (!pBufferPointer) pBufferPointer = n_BufferPointer // 1, 4, 7, 10, 13, 16
@@ -126,7 +128,7 @@ namespace mkc { // bluetooth.ts
     //export function receivedBuffer_Pointer() { return n_BufferPointer }
 
 
-    //% group="Bluetooth empfangen"
+    //% group="Bluetooth empfangen" color=#00AF00
     //% block="Bluetooth Datenpaket gültig || %pBufferPointer | " weight=8
     export function receivedBuffer_Contains(pBufferPointer?: eBufferPointer): boolean {
         // wenn optionaler Parameter fehlt
@@ -134,7 +136,7 @@ namespace mkc { // bluetooth.ts
         return (n_receivedBuffer19 && (n_receivedBuffer19.length > (pBufferPointer + 2))) // max 18
     }
 
-    //% group="Bluetooth empfangen"
+    //% group="Bluetooth empfangen" color=#00AF00
     //% block="Bluetooth Byte lesen %pOffset || %pBufferPointer " weight=7
     export function receivedBuffer_getUint8(pBufferOffset: eBufferOffset, pBufferPointer?: eBufferPointer) {
         //basic.showNumber(pBufferPointer)
@@ -165,7 +167,7 @@ namespace mkc { // bluetooth.ts
         fahrenStrecke
     }
 
-    //% group="Bluetooth empfangen"
+    //% group="Bluetooth empfangen" color=#00AF00
     //% block="Bluetooth Steuer-Byte 0 %pBit" weight=6
     export function receivedBuffer_getBit(pBit: eBufferBit) {
         let byte0 = n_receivedBuffer19.getUint8(0)
@@ -194,36 +196,36 @@ namespace mkc { // bluetooth.ts
 
 
     // ========== enums
-/* 
-    export enum ePause {
-        //% block="0.5"
-        p05 = 5,
-        //% block="1"
-        p1 = 10,
-        //% block="2"
-        p2 = 20,
-        //% block="3"
-        p3 = 30,
-        //% block="4"
-        p4 = 40,
-        //% block="5"
-        p5 = 50,
-        //% block="10"
-        p10 = 100,
-        //% block="15"
-        p15 = 150,
-        //% block="20"
-        p20 = 200,
-        //% block="30"
-        p30 = 300,
-        //% block="45"
-        p45 = 450,
-        //% block="60"
-        p60 = 600
-    }
-    //% blockId=mkc_ePause block="%pPause" blockHidden=true
-    export function mkc_ePause(pPause: ePause): number { return pPause / 10 }
- */
+    /* 
+        export enum ePause {
+            //% block="0.5"
+            p05 = 5,
+            //% block="1"
+            p1 = 10,
+            //% block="2"
+            p2 = 20,
+            //% block="3"
+            p3 = 30,
+            //% block="4"
+            p4 = 40,
+            //% block="5"
+            p5 = 50,
+            //% block="10"
+            p10 = 100,
+            //% block="15"
+            p15 = 150,
+            //% block="20"
+            p20 = 200,
+            //% block="30"
+            p30 = 300,
+            //% block="45"
+            p45 = 450,
+            //% block="60"
+            p60 = 600
+        }
+        //% blockId=mkc_ePause block="%pPause" blockHidden=true
+        export function mkc_ePause(pPause: ePause): number { return pPause / 10 }
+     */
 
 
     //% group="Relais" subcategory="Aktoren"
