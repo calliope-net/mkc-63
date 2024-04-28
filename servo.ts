@@ -1,6 +1,6 @@
 
 namespace mkc { // servo.ts
-    export const pinServo = AnalogPin.P1 // 5V fischertechnik 132292 Servo
+  /*   export const pinServo = AnalogPin.P1 // 5V fischertechnik 132292 Servo
     export const c_Servo_geradeaus = 90
 
     export let n_Servo_geradeaus = c_Servo_geradeaus // Winkel für geradeaus wird beim Start eingestellt
@@ -34,5 +34,5 @@ namespace mkc { // servo.ts
     export function between(i0: number, i1: number, i2: number): boolean {
         return (i0 >= i1 && i0 <= i2)
     }
-
+ */
 } // servo.ts

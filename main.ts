@@ -8,8 +8,7 @@ mkc.onReceivedData(function (receivedBuffer) {
         }
     }
 })
-mkc.bluetooth_beimStart(240, 90)
-basic.showIcon(IconNames.Yes)
+mkc.beimStart(240, 90)
 loops.everyInterval(1000, function () {
     if (mkc.bluetooth_timeout()) {
     	

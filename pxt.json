@@ -11,7 +11,8 @@
         "main.ts",
         "README.md",
         "bluetooth.ts",
-        "servo.ts"
+        "servo.ts",
+        "mkc.ts"
     ],
     "testFiles": [
         "test.ts"

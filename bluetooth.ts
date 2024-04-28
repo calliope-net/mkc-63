@@ -1,17 +1,17 @@
-//% color=#007F00 icon="\uf0d1" block="Maker Kit Car" weight=28
+
 namespace mkc
 /*
 */ { // bluetooth.ts
 
-    let n_ready = false
+   // let n_ready = false
     let n_Licht = false
     let n_receivedBuffer19: Buffer
-
+/* 
     const c_MotorStop = 128
     let n_MotorReady = false
     //let n_MotorON = false       // aktueller Wert im Chip
     let n_MotorA = c_MotorStop  // aktueller Wert im Chip
-
+ */
 
     export enum eBufferPointer {
         //% block="1-2-3"
@@ -40,43 +40,11 @@ namespace mkc
     }
 
 
-    //% group="beim Start"
-    //% block="beim Start Funkgruppe %funkgruppe Servo ↑ %winkel °" weight=8
-    //% funkgruppe.min=0 funkgruppe.max=255 funkgruppe.defl=240
-    //% winkel.min=81 winkel.max=99 winkel.defl=90
-    //% inlineInputMode=inline 
-    export function bluetooth_beimStart(funkgruppe: number, winkel: number) {
-        n_ready = false // CaR4 ist nicht bereit: Schleifen werden nicht abgearbeitet
 
-        // Parameter
+    export function bluetooth_beimStart(funkgruppe: number) {
         radio.setGroup(funkgruppe)
-        n_Servo_geradeaus = winkel
-
-        //servo(90) // Servo PIN PWM
-        pins.servoWritePin(pinServo, n_Servo_geradeaus)
-
-        // Bluetooth
         n_connected = false
         n_lastconnectedTime = input.runningTime() // Laufzeit
-
-        n_ready = true
-    }
-
-
-    //% group="Motor"
-    //% block="Motor A (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
-    //% speed.min=0 speed.max=255 speed.defl=128
-    export function motorA255(speed: number) { // sendet nur wenn der Wert sich ändert
-        if (n_MotorReady) {
-            if (between(speed, 0, 255) && speed != n_MotorA) {
-                n_MotorA = speed
-
-                motors.dualMotorPower(Motor.M0, Math.map(speed, 0, 255, -100, 100))
-                // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([MA_DRIVE, n_MotorA]))
-            }
-        }
-        else if (speed == c_MotorStop)
-            n_MotorReady = true
     }
 
     // ========== Bluetooth Event ==========
