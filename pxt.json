@@ -14,7 +14,8 @@
         "bluetooth.ts",
         "v3.ts",
         "programmieren.ts",
-        "sensoren.ts"
+        "sensoren.ts",
+        "aktoren.ts"
     ],
     "testFiles": [
         "test.ts"

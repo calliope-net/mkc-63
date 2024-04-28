@@ -1,6 +1,7 @@
+// Gib deinen Code hier ein
 
-namespace mkc { // v3.ts
-/* 
+namespace mkc { // aktoren.ts
+
     export enum eRGBled { a, b, c }
 
     let n_rgbled = [0, 0, 0]
@@ -54,5 +55,5 @@ namespace mkc { // v3.ts
         basic.setLedColors(n_rgbled[0], n_rgbled[1], n_rgbled[2])
     }
 
- */
-} // v3.ts
+
+} // aktoren.ts
