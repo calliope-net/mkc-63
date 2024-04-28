@@ -14,7 +14,18 @@ namespace mkc
 
 
     export enum eBufferPointer {
-        p0 = 1, p1 = 4, p2 = 7, p3 = 10, p4 = 13, p5 = 16
+        //% block="1-2-3"
+        p0 = 1, 
+        //% block="4-5-6"
+        p1 = 4,
+        //% block="7-8-9"
+        p2 = 7,
+        //% block="10-11-12"
+        p3 = 10,
+        //% block="13-14-15"
+        p4 = 13,
+        //% block="16-17-18"
+        p5 = 16
     }
     let n_BufferPointer: eBufferPointer = eBufferPointer.p0 // n=0..5 (n*3)+1 = 1, 4, 7, 10, 13, 16
 
