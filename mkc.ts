@@ -2,7 +2,6 @@
 //% color=#007F00 icon="\uf0d1" block="Maker Kit Car" weight=28
 namespace mkc { // mkc.ts
 
-    const pinServo = AnalogPin.C4           // 5V fischertechnik 132292 Servo
 
     const c_Simulator: boolean = ("€".charCodeAt(0) == 8364)
 
@@ -12,24 +11,27 @@ namespace mkc { // mkc.ts
     let n_MotorA = c_MotorStop  // aktueller Wert im Chip
 
     export const c_Servo_geradeaus = 90
-    let n_Servo_geradeaus = c_Servo_geradeaus // Winkel für geradeaus wird beim Start eingestellt
+    let n_ServoPin = AnalogPin.P1           // 5V fischertechnik 132292 Servo
+    let n_ServoGeradeaus = c_Servo_geradeaus // Winkel für geradeaus wird beim Start eingestellt
     let n_ServoWinkel = c_Servo_geradeaus // aktuell eingestellter Winkel
     let n_ready = false
 
 
     //% group="beim Start"
-    //% block="beim Start Funkgruppe %funkgruppe Servo ↑ %winkel °" weight=8
+    //% block="beim Start Funkgruppe %funkgruppe Servo Pin %servoPin ↑ %servoGeradeaus °" weight=8
     //% funkgruppe.min=0 funkgruppe.max=255 funkgruppe.defl=240
-    //% winkel.min=81 winkel.max=99 winkel.defl=90
+    //% servoPin.defl=AnalogPin.P1
+    //% servoGeradeaus.min=81 servoGeradeaus.max=99 servoGeradeaus.defl=90
     //% inlineInputMode=inline 
-    export function beimStart(funkgruppe: number, winkel: number) {
+    export function beimStart(funkgruppe: number, servoPin: AnalogPin, servoGeradeaus: number) {
         n_ready = false // CaR4 ist nicht bereit: Schleifen werden nicht abgearbeitet
 
         // Parameter
-        n_Servo_geradeaus = winkel
+        n_ServoPin = servoPin
+        n_ServoGeradeaus = servoGeradeaus
 
         //servo(90) // Servo PIN PWM
-        pins.servoWritePin(pinServo, n_Servo_geradeaus)
+        pins.servoWritePin(servoPin, n_ServoGeradeaus)
 
         // in bluetooth.ts:
         bluetooth_beimStart(funkgruppe)
@@ -40,14 +42,14 @@ namespace mkc { // mkc.ts
 
 
     //% group="Motor"
-    //% block="Motor A (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
+    //% block="Motor %motor (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
     //% speed.min=0 speed.max=255 speed.defl=128
-    export function motorA255(speed: number) { // sendet nur wenn der Wert sich ändert
+    export function motorA255(motor: Motor, speed: number) { // sendet nur wenn der Wert sich ändert
         if (n_MotorReady) {
             if (between(speed, 0, 255) && speed != n_MotorA) {
                 n_MotorA = speed
 
-                motors.dualMotorPower(Motor.M0, Math.map(speed, 0, 255, -100, 100))
+                motors.dualMotorPower(motor, Math.map(speed, 0, 255, -100, 100))
                 // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([MA_DRIVE, n_MotorA]))
             }
         }
@@ -65,7 +67,7 @@ namespace mkc { // mkc.ts
         // (0+14)*3=42 keine Änderung, gültige Werte im Buffer 1-31  (1+14)*3=45  (16+14)*3=90  (31+14)*3=135
         if (between(winkel, 45, 135) && n_ServoWinkel != winkel) {
             n_ServoWinkel = winkel
-            pins.servoWritePin(pinServo, winkel + n_Servo_geradeaus - 90)
+            pins.servoWritePin(n_ServoPin, winkel + n_ServoGeradeaus - c_Servo_geradeaus)
         }
     }
     //% group="Servo"
