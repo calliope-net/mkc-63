@@ -5,6 +5,7 @@ mkc.onReceivedData(function (receivedBuffer) {
             mkc.motorPower(mkc.receivedBuffer_getBit(mkc.eBufferBit.x80_MotorPower))
             mkc.rgbLEDon(mkc.eRGBled.a, 0xff0000, mkc.receivedBuffer_getBit(mkc.eBufferBit.x80_MotorPower))
             mkc.motor255(Motor.M0, mkc.receivedBuffer_getUint8(mkc.eBufferOffset.b0_Motor))
+            mkc.buzzer(mkc.receivedBuffer_getBit(mkc.eBufferBit.x40_Hupe))
         } else {
             mkc.motor255(Motor.M0, 128)
         }
@@ -16,7 +17,13 @@ mkc.onReceivedData(function (receivedBuffer) {
     }
 })
 mkc.beimStart(240, 90)
-basic.showIcon(IconNames.Yes)
+basic.showLeds(`
+    . . # . .
+    . # . # .
+    . . # . .
+    # # # # #
+    # . . . #
+    `)
 loops.everyInterval(700, function () {
     if (mkc.bluetooth_timeout(1, 60)) {
         mkc.rgbLEDon(mkc.eRGBled.a, 0x000000, false)

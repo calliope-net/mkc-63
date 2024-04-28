@@ -1,27 +1,39 @@
 
 namespace mkc { // v3.ts
 
-    let n_rgbled = [0, 0, 0]
     export enum eRGBled { a, b, c }
 
-    //let n_Licht = false
+    let n_rgbled = [0, 0, 0]
+    let n_buzzer = false
 
 
-    // group="Licht" subcategory="Aktoren"
-    // block="Licht %pON || blinken %pBlink" weight=6
-    // pON.shadow="toggleOnOff" pBlink.shadow="toggleOnOff"
-    /* function licht(pON: boolean, pBlink = false) {
-        if (pON && pBlink)
-            n_Licht = !n_Licht
-        else
-            n_Licht = pON
-
-        basic.setLedColor(n_Licht ? 0x009ff00 : 0x0000ff)
-        //pins.digitalWritePin(pinLicht, n_Licht ? 0 : 1) // an bei digitalem Wert 0
-    } */
+    //% group="Relais" subcategory="Aktoren"
+    //% block="Relais %pON"
+    //% pON.shadow="toggleOnOff"
+    export function relay(pON: boolean) { }
 
 
-    //% group="Licht"
+
+
+    //% group="Hupe" subcategory="Aktoren"
+    //% block="Hupe %pON"
+    //% pON.shadow="toggleOnOff"
+    export function buzzer(pON: boolean) {
+        if (n_buzzer !== pON) {
+            n_buzzer = pON
+            if (n_buzzer)
+                music.ringTone(262)
+            else
+                music.stopAllSounds()
+            // pins.digitalWritePin(pinBuzzer, n_buzzer ? 1 : 0)
+        }
+    }
+
+
+
+
+
+    //% group="Licht" subcategory="Aktoren"
     //% block="RGB LEDs %led %color %on" weight=6
     //% color.shadow="colorNumberPicker"
     //% on.shadow="toggleOnOff"
@@ -29,7 +41,7 @@ namespace mkc { // v3.ts
         rgbLEDs(led, (on ? color : 0), false)
     }
 
-    //% group="Licht"
+    //% group="Licht" subcategory="Aktoren"
     //% block="RGB LEDs %led %color blinken %blinken" weight=5
     //% color.shadow="colorNumberPicker"
     //% blinken.shadow="toggleYesNo"

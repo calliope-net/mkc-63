@@ -228,10 +228,4 @@ namespace mkc { // bluetooth.ts
         export function mkc_ePause(pPause: ePause): number { return pPause / 10 }
      */
 
-
-    //% group="Relais" subcategory="Aktoren"
-    //% block="Relais %pON"
-    //% pON.shadow="toggleOnOff"
- export   function relay(pON: boolean) { }
-
 } // bluetooth.ts
