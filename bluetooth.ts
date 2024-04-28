@@ -62,7 +62,7 @@ namespace mkc { // bluetooth.ts
 
     // Event-Block
 
-    //% group="Bluetooth Verbindung" color=#00AF00
+    //% group="Bluetooth Verbindung" color=#007F7F
     //% block="wenn bereit und Datenpaket empfangen" weight=9
     //% draggableParameters=reporter
     export function onReceivedData(cb: (receivedBuffer: Buffer) => void) {
@@ -71,7 +71,7 @@ namespace mkc { // bluetooth.ts
 
 
 
-    //% group="Bluetooth Verbindung" color=#00AF00
+    //% group="Bluetooth Verbindung" color=#007F7F
     //% block="Bluetooth Timeout nach %timeout s ||, ausschalten nach %ausschalten s" weight=8
     //% timeout.defl=1 ausschalten.defl=60 
     // inlineInputMode=inline expandableArgumentMode=toggle
@@ -93,7 +93,7 @@ namespace mkc { // bluetooth.ts
 
 
 
-    // group="Bluetooth Verbindung" subcategory="Bluetooth" color=#E3008C
+    // group="Bluetooth Verbindung" subcategory="Bluetooth" color=#007F7F
     // block="letztes Datenpaket vor > %sekunden Sekunden" weight=4
     // sekunden.shadow=mkc_ePause
     function lastConnected(sekunden: number) {
@@ -128,7 +128,7 @@ namespace mkc { // bluetooth.ts
     //export function receivedBuffer_Pointer() { return n_BufferPointer }
 
 
-    //% group="Bluetooth empfangen" color=#00AF00
+    //% group="Bluetooth empfangen" color=#007F7F
     //% block="Bluetooth Datenpaket gültig || %pBufferPointer | " weight=8
     export function receivedBuffer_Contains(pBufferPointer?: eBufferPointer): boolean {
         // wenn optionaler Parameter fehlt
@@ -136,7 +136,7 @@ namespace mkc { // bluetooth.ts
         return (n_receivedBuffer19 && (n_receivedBuffer19.length > (pBufferPointer + 2))) // max 18
     }
 
-    //% group="Bluetooth empfangen" color=#00AF00
+    //% group="Bluetooth empfangen" color=#007F7F
     //% block="Bluetooth Byte lesen %pOffset || %pBufferPointer " weight=7
     export function receivedBuffer_getUint8(pBufferOffset: eBufferOffset, pBufferPointer?: eBufferPointer) {
         //basic.showNumber(pBufferPointer)
@@ -167,7 +167,7 @@ namespace mkc { // bluetooth.ts
         fahrenStrecke
     }
 
-    //% group="Bluetooth empfangen" color=#00AF00
+    //% group="Bluetooth empfangen" color=#007F7F
     //% block="Bluetooth Steuer-Byte 0 %pBit" weight=6
     export function receivedBuffer_getBit(pBit: eBufferBit) {
         let byte0 = n_receivedBuffer19.getUint8(0)

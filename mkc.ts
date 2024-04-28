@@ -16,7 +16,7 @@ namespace mkc { // mkc.ts
     let n_ServoPin = AnalogPin.P1           // 5V fischertechnik 132292 Servo
     let n_ServoGeradeaus = c_Servo_geradeaus // Winkel für geradeaus wird beim Start eingestellt
     let n_ServoWinkel = c_Servo_geradeaus // aktuell eingestellter Winkel
-  
+
 
 
     //% group="calliope-net.github.io/mkc-63"
@@ -60,8 +60,10 @@ namespace mkc { // mkc.ts
         if (pON !== n_MotorON) {
             //motors.dualMotorPower(Motor.M0_M1, 0)
             n_MotorON = pON
-            if (!n_MotorON)
-                motors.dualMotorPower(Motor.M0_M1, 0)
+            if (!n_MotorON && n_Motor0 != c_MotorStop)
+                motors.dualMotorPower(Motor.M0, 0)
+            if (!n_MotorON && n_Motor1 != c_MotorStop)
+                motors.dualMotorPower(Motor.M1, 0)
         }
     }
     // pins.i2cWriteBuffer(i2cMotor, Buffer.fromArray([DRIVER_ENABLE, n_MotorON ? 0x01 : 0x00]))
