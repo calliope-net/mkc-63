@@ -10,8 +10,8 @@ mkc.onReceivedData(function (receivedBuffer) {
 })
 mkc.beimStart(240, AnalogPin.P1, 90)
 basic.showIcon(IconNames.Yes)
-loops.everyInterval(1000, function () {
-    if (mkc.bluetooth_timeout()) {
-    	
+loops.everyInterval(700, function () {
+    if (mkc.bluetooth_timeout(1, 60)) {
+        mkc.licht(true, true)
     }
 })

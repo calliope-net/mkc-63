@@ -40,6 +40,13 @@ namespace mkc { // mkc.ts
     }
 
 
+    // group="beim Start"
+    // block="Car bereit" weight=6
+    export function carReady() {
+        return n_ready //&& motorStatus()
+    }
+
+
 
     //% group="Motor"
     //% block="Motor %motor (0 ↓ 128 ↑ 255) %speed (128 ist STOP)" weight=4
@@ -70,9 +77,9 @@ namespace mkc { // mkc.ts
             pins.servoWritePin(n_ServoPin, winkel + n_ServoGeradeaus - c_Servo_geradeaus)
         }
     }
-    //% group="Servo"
-    //% block="Servo (135° ↖ 90° ↗ 45°)" weight=2
-    export function servo_get() { return n_ServoWinkel }
+    // group="Servo"
+    // block="Servo (135° ↖ 90° ↗ 45°)" weight=2
+     function servo_get() { return n_ServoWinkel }
 
 
     // ========== advanced=true ==========
@@ -85,6 +92,12 @@ namespace mkc { // mkc.ts
         return (i0 >= i1 && i0 <= i2)
     }
 
+
+    // ========== group="Text" advanced=true
+
+    //% group="Text" advanced=true
+    //% block="// %text" weight=9
+    export function comment(text: string): void { }
 
 
 } // mkc.ts

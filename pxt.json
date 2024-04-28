@@ -12,7 +12,8 @@
         "README.md",
         "bluetooth.ts",
         "servo.ts",
-        "mkc.ts"
+        "mkc.ts",
+        "v3.ts"
     ],
     "testFiles": [
         "test.ts"
