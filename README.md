@@ -12,8 +12,8 @@ Dieses Repository kann als **Erweiterung** in MakeCode hinzugefügt werden.
 
 ### Calliope v3 PINs
 
-Steckverbinder|Bezeichnung v3|Blöcke v3|digital|analog
----|---|---|---|---
+Steckverbinder|Bezeichnung v3|Blöcke v3|digital|analog out|analog in
+---|---|---|---|---|---
 1|VCC|3.3V
 2|GND|GND
 3|PAD1|P1|v1 v3|v
@@ -38,6 +38,8 @@ Steckverbinder|Bezeichnung v3|Blöcke v3|digital|analog
 21|I2C_EXT_SCL|C19
 24|I2C_EXT_SDA|C20
 23|GND|GND
+_|RGB|
+_|MIC|
 
 
 #### Metadaten (verwendet für Suche, Rendering)
