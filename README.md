@@ -10,13 +10,17 @@ Dieses Repository kann als **Erweiterung** in MakeCode hinzugefügt werden.
 * klicke auf **Erweiterungen** unter dem Zahnrad-Menü
 * nach **https://github.com/calliope-net/mkc-63** suchen und importieren
 
-## Dieses Projekt bearbeiten
+### Calliope v3 PINs
 
-Um dieses Repository in MakeCode zu bearbeiten.
+Steckverbinder|Bezeichnung|Blöcke
+---|---|---
+1|VCC|3.3V
+2|GND|GND
+3|PAD1|P1
+4|PAD0|P0
 
-* öffne [https://makecode.calliope.cc/](https://makecode.calliope.cc/)
-* klicke auf **Importieren** und dann auf **Importiere URL**
-* füge **https://github.com/calliope-net/mkc-63** ein und klicke auf Importieren
+
+
 
 #### Metadaten (verwendet für Suche, Rendering)
 
