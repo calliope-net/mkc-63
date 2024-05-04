@@ -16,7 +16,7 @@ mkc.onReceivedData(function (receivedBuffer) {
         mkc.fahreBuffer19()
     }
 })
-mkc.beimStart(240, 90)
+mkc.beimStart(240, 94)
 basic.showLeds(`
     . . # . .
     . # . # .
