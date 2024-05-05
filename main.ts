@@ -9,6 +9,7 @@ mkc.onReceivedData(function (receivedBuffer) {
             mkc.buzzer(mkc.receivedBuffer_getBit(mkc.eBufferBit.x40_Hupe))
         } else {
             mkc.motor255(Motor.M0, 128)
+            mkc.buzzer(false)
         }
         mkc.rgbLEDs(mkc.eRGBled.b, 0x0000ff, false)
     } else if (mkc.receivedBuffer_getBit(mkc.eBufferBit.fahrenStrecke)) {
@@ -19,12 +20,13 @@ mkc.onReceivedData(function (receivedBuffer) {
 })
 radio.onReceivedValue(function (name, value) {
     mkc.motor255(Motor.M0, 128)
+    mkc.buzzer(false)
     if (name == "M1") {
         mkc.bluetooth_timer()
         mkc.motor255(Motor.M1, value)
     }
 })
-mkc.beimStart(240, 94)
+mkc.beimStart(239, 94)
 basic.showLeds(`
     . . # . .
     . # . # .
