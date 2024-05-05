@@ -92,6 +92,13 @@ namespace mkc { // bluetooth.ts
     }
 
 
+    //% group="Bluetooth Verbindung" color=#007F7F
+    //% block="Bluetooth Timer Reset" weight=7
+    export function bluetooth_timer() {
+        n_lastconnectedTime = input.runningTime() // Laufzeit
+    }
+
+
 
     // group="Bluetooth Verbindung" subcategory="Bluetooth" color=#007F7F
     // block="letztes Datenpaket vor > %sekunden Sekunden" weight=4

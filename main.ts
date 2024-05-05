@@ -18,6 +18,7 @@ mkc.onReceivedData(function (receivedBuffer) {
 })
 radio.onReceivedValue(function (name, value) {
     if (name == "M1") {
+        mkc.bluetooth_timer()
         mkc.motor255(Motor.M1, value)
     }
 })
