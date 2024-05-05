@@ -2,7 +2,7 @@
 namespace mkc { // sensoren.ts
 
     // ========== group="Encoder" subcategory="Sensoren"
- export   const c_MotorEncoder= Motor.M0
+    export const c_MotorEncoder = Motor.M0
 
     let n_EncoderCounter: number = 0 // Impuls Zähler
     let n_EncoderFaktor = 63.3 * (26 / 14) / (8 * Math.PI) // 63.3 Motorwelle * (26/14) Zahnräder / (8cm * PI) Rad Umfang = 4.6774502 cm

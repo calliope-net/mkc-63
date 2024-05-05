@@ -16,6 +16,11 @@ mkc.onReceivedData(function (receivedBuffer) {
         mkc.fahreBuffer19()
     }
 })
+radio.onReceivedValue(function (name, value) {
+    if (name == "M1") {
+        mkc.motor255(Motor.M1, value)
+    }
+})
 mkc.beimStart(240, 94)
 basic.showLeds(`
     . . # . .
