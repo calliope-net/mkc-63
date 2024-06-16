@@ -27,9 +27,9 @@ Steckverbinder|Bezeichnung v3|Blöcke v3|digital|analog out|analog in
 10|COLR4|C6|v3 v1|v3 v1|v1
 14|COLR5|C10|v3 v1|v3|v3
 22|COLR3|C18|v3 v1|v3|v3
-11|GPIO2|C9|v3 v1|v3|-
-12|GPIO1|C8|v3 v1|v3|-
-16|GPIO4|C12|v3 v1|v3|-
+11|GPIO2|C9 frei|v3 v1|v3|-
+12|GPIO1|C8 frei|v3 v1|v3|-
+16|GPIO4|C12 Jacdac|v3 v1|v3|-
 19|GPIO3|**C17** TX|v3 v1|v3 v1|v1
 20|GROVE_Analogin|**C16** RX|v3 v1|v3 v1|v3 v1
 15|SPI_EXT_SCK|C13|v3|v3|-
