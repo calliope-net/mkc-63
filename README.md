@@ -17,7 +17,7 @@ Steckverbinder|Bezeichnung v3|Blöcke v3|digital|analog out|analog in
 1|VCC|3.3V
 2|GND|GND
 3|PAD1|P1|v3 v1|v3 v1|v3 v1
-4|PAD0|P0|v3 v1|v3|v3|v3
+4|PAD0|P0|v3 v1|v3|v3
 5|PAD3|P3|v3 v1|v3|-
 6|PAD2|P2|v3 v1|v3 v1|v3 v1
 7|BTN_A|C5|v3 v1|v3 v1|v1
