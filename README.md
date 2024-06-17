@@ -35,8 +35,8 @@ Steckverbinder|Bezeichnung v3|Blöcke v3|digital|analog out|analog in
 15|SPI_EXT_SCK|C13 frei|v3|v3|-
 17|SPI_EXT_MOSI|C15 frei|v3|v3|-
 18|SPI_EXT_MISO|C14 frei|v3|v3|-
-21|I2C_EXT_SCL|**C19**
-24|I2C_EXT_SDA|**C20**
+21|I2C_EXT_SCL|**C19** SCL
+24|I2C_EXT_SDA|**C20** SDA
 23|GND|
 _|RGB|
 _|MIC|||v1|v1
