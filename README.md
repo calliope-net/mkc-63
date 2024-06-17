@@ -32,9 +32,9 @@ Steckverbinder|Bezeichnung v3|Blöcke v3|digital|analog out|analog in
 16|GPIO4|C12 Jacdac|v3 v1|v3|-
 19|GPIO3|**C17** TX|v3 v1|v3 v1|v1
 20|GROVE_Analogin|**C16** RX|v3 v1|v3 v1|v3 v1
-15|SPI_EXT_SCK|C13|v3|v3|-
-17|SPI_EXTMOSI|C15|v3|v3|-
-18|SPI_EXT_MISO|C14|v3|v3|-
+15|SPI_EXT_SCK|C13 frei|v3|v3|-
+17|SPI_EXT_MOSI|C15 frei|v3|v3|-
+18|SPI_EXT_MISO|C14 frei|v3|v3|-
 21|I2C_EXT_SCL|**C19**
 24|I2C_EXT_SDA|**C20**
 23|GND|
